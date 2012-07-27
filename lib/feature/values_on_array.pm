@@ -1,4 +1,4 @@
-package feature::keys_on_array; # so as not to confuse dzil?
+package feature::values_on_array; # so as not to confuse dzil?
 
 use strict;
 use warnings;
@@ -8,9 +8,9 @@ use Scalar::Util qw(reftype);
 
 package Tie::ArrayAsHash;
 
-sub akeys (\[@%]) {
+sub avalues (\[@%]) {
     my $thing = shift;
-    return keys %$thing
+    return values %$thing
         if reftype $thing eq 'HASH';
     confess "should be passed a HASH or ARRAY"
         unless reftype $thing eq 'ARRAY';
@@ -20,35 +20,35 @@ sub akeys (\[@%]) {
         \%h
     };
 
-    keys %$thing_h;
+    values %$thing_h;
 }
 
-package feature::keys_on_array;
+package feature::values_on_array;
 
 sub import {
     return unless $^V lt 5.12.0;
     no strict 'refs';
     my @caller = caller;
-    *{"$caller[0]::keys"} = \&akeys;
+    *{"$caller[0]::values"} = \&avalues;
 }
 
 # XXX on unimport, delete symbol
 
 1;
-# ABSTRACT: Emulate keys(@array) on Perl < 5.12
+# ABSTRACT: Emulate values(@array) on Perl < 5.12
 
 =head1 SYNOPSIS
 
  # This can run on Perls older than 5.12 and have no effect on 5.12+
- use feature::keys_on_array;
+ use feature::values_on_array;
 
  my @a = (qw/a b c/);
- my @keys = keys @a;
+ my @values = values @a;
 
 
 =head1 DESCRIPTION
 
-Beginning with 5.12, Perl supports keys() on array. This module emulates the
+Beginning with 5.12, Perl supports values() on array. This module emulates the
 support on older Perls.
 
 
@@ -61,6 +61,6 @@ Works on a per-package level, but does not work lexically yet.
 
 L<feature::each_on_array>
 
-L<feature::values_on_array>
+L<feature::keys_on_array>
 
 =cut
