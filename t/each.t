@@ -5,7 +5,7 @@ use warnings;
 
 use Test::More tests => 1;
 
-use feature::each_on_array;
+use syntax 'each_on_array';
 
 my @a = (qw/a b c/);
 my $s = "";

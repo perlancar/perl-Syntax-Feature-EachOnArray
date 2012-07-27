@@ -1,8 +1,8 @@
-package feature::values_on_array; # so as not to confuse dzil?
+package Syntax::Feature::ValuesOnArray; # so as not to confuse dzil?
 # VERSION
 use strict;
 use warnings;
-use feature::each_on_array ();
+use Syntax::Feature::EachOnArray ();
 use Carp;
 use Scalar::Util qw(reftype);
 
@@ -23,16 +23,18 @@ sub avalues (\[@%]) {
     values %$thing_h;
 }
 
-package feature::values_on_array;
+package Syntax::Feature::ValuesOnArray;
 
-sub import {
+sub install {
+    my $class = shift;
+    my %args = @_;
+
     return unless $^V lt 5.12.0;
     no strict 'refs';
-    my @caller = caller;
-    *{"$caller[0]::values"} = \&avalues;
+    *{"$args{into}::values"} = \&avalues;
 }
 
-# XXX on unimport, delete symbol
+# XXX on uninstall, delete symbol
 
 1;
 # ABSTRACT: Emulate values(@array) on Perl < 5.12
@@ -40,7 +42,7 @@ sub import {
 =head1 SYNOPSIS
 
  # This can run on Perls older than 5.12 and have no effect on 5.12+
- use feature::values_on_array;
+ use syntax 'values_on_array';
 
  my @a = (qw/a b c/);
  my @values = values @a;
@@ -48,19 +50,21 @@ sub import {
 
 =head1 DESCRIPTION
 
-Beginning with 5.12, Perl supports values() on array. This module emulates the
-support on older Perls.
+Beginning with 5.12, Perl supports values() on array. This syntax extension
+emulates the support on older Perls.
 
 
 =head1 CAVEATS
 
-Works on a per-package level, but does not work lexically yet.
+No uninstall() yet.
 
 
 =head1 SEE ALSO
 
-L<feature::each_on_array>
+L<syntax>
 
-L<feature::keys_on_array>
+L<Syntax::Feature::EachOnArray>
+
+L<Syntax::Feature::KeysOnArray>
 
 =cut

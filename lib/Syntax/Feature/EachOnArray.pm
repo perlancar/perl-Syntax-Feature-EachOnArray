@@ -1,4 +1,4 @@
-package feature::each_on_array; # don't confuse dzil?
+package Syntax::Feature::EachOnArray; # don't confuse dzil?
 # VERSION
 # BEGIN PORTION (c) Toby Inkster
 {
@@ -106,20 +106,22 @@ package feature::each_on_array; # don't confuse dzil?
 }
 # END PORTION
 
-package feature::each_on_array;
+package Syntax::Feature::EachOnArray;
 
 use strict;
 use warnings;
 use Tie::ArrayAsHash qw(aeach);
 
-sub import {
+sub install {
+    my $class = shift;
+    my %args = @_;
+
     return unless $^V lt 5.12.0;
     no strict 'refs';
-    my @caller = caller;
-    *{"$caller[0]::each"} = \&aeach;
+    *{"$args{into}::each"} = \&aeach;
 }
 
-# XXX on unimport, delete symbol
+# XXX on uninstall, delete symbol
 
 1;
 # ABSTRACT: Emulate each(@array) on Perl < 5.12
@@ -127,7 +129,8 @@ sub import {
 =head1 SYNOPSIS
 
  # This can run on Perls older than 5.12 and have no effect on 5.12+
- use feature::each_on_array;
+
+ use syntax 'each_on_array';
 
  my @a = (qw/a b c/);
  while (my ($idx, $item) = each @a) {
@@ -137,13 +140,13 @@ sub import {
 
 =head1 DESCRIPTION
 
-Beginning with 5.12, Perl supports each() on array. This module emulates the
-support on older Perls.
+Beginning with 5.12, Perl supports each() on array. This syntax extension
+emulates the support on older Perls.
 
 
 =head1 CAVEATS
 
-Works on a per-package level, but does not work lexically yet.
+No uninstall() yet.
 
 
 =head1 CREDITS
@@ -156,8 +159,10 @@ Thanks to Toby Inkster for writing the tie handler.
 This module originates from this discussion thread:
 L<http://www.perlmonks.org/?node_id=983878>
 
-L<feature::key_on_array>
+L<syntax>
 
-L<feature::values_on_array>
+L<Syntax::Feature::KeysOnArray>
+
+L<Syntax::Feature::ValuesOnArray>
 
 =cut
