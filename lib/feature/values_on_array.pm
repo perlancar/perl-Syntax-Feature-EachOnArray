@@ -1,5 +1,5 @@
 package feature::values_on_array; # so as not to confuse dzil?
-
+# VERSION
 use strict;
 use warnings;
 use feature::each_on_array ();

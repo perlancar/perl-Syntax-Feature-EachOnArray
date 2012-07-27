@@ -1,5 +1,5 @@
 package feature::each_on_array; # don't confuse dzil?
-
+# VERSION
 # BEGIN PORTION (c) Toby Inkster
 {
 	package Tie::ArrayAsHash;
