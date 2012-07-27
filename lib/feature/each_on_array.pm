@@ -22,7 +22,7 @@ package feature::each_on_array; # don't confuse dzil?
 		NEXT_IDX  => 2,
 	};
 
-	fieldhash my %cache;
+	fieldhash our %cache;
 
 	sub aeach (\[@%])
 	{
