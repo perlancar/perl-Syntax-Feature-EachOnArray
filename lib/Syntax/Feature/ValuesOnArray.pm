@@ -31,7 +31,7 @@ sub install {
 
     return unless $^V lt 5.12.0;
     no strict 'refs';
-    *{"$args{into}::values"} = \&avalues;
+    *{"$args{into}::values"} = \&Tie::ArrayAsHash::avalues;
 }
 
 # XXX on uninstall, delete symbol

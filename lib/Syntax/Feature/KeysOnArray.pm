@@ -31,7 +31,7 @@ sub install {
 
     return unless $^V lt 5.12.0;
     no strict 'refs';
-    *{"$args{into}::keys"} = \&akeys;
+    *{"$args{into}::keys"} = \&Tie::ArrayAsHash::akeys;
 }
 
 # XXX on uninstall, delete symbol
