@@ -126,6 +126,8 @@ sub install {
 1;
 # ABSTRACT: Emulate each(@array) on Perl < 5.12
 
+=for Pod::Coverage ^(install)$
+
 =head1 SYNOPSIS
 
  # This can run on Perls older than 5.12 and have no effect on 5.12+
