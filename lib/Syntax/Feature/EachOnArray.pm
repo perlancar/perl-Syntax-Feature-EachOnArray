@@ -8,7 +8,6 @@ package Syntax::Feature::EachOnArray; # don't confuse dzil?
 	no warnings;
 	use Carp;
 	use Hash::FieldHash qw(fieldhash);
-	use Scalar::Util qw(reftype);
 
 	use base qw(Exporter);
 	BEGIN {
@@ -28,9 +27,9 @@ package Syntax::Feature::EachOnArray; # don't confuse dzil?
 	{
 		my $thing = shift;
 		return each %$thing
-			if reftype $thing eq 'HASH';
+			if ref $thing eq 'HASH';
 		confess "should be passed a HASH or ARRAY"
-			unless reftype $thing eq 'ARRAY';
+			unless ref $thing eq 'ARRAY';
 
 		my $thing_h = $cache{$thing} ||= do {
 			tie my %h, __PACKAGE__, $thing;

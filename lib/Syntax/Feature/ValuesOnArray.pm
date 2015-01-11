@@ -4,16 +4,15 @@ use strict;
 use warnings;
 use Syntax::Feature::EachOnArray ();
 use Carp;
-use Scalar::Util qw(reftype);
 
 package Tie::ArrayAsHash;
 
 sub avalues (\[@%]) {
     my $thing = shift;
     return values %$thing
-        if reftype $thing eq 'HASH';
+        if ref $thing eq 'HASH';
     confess "should be passed a HASH or ARRAY"
-        unless reftype $thing eq 'ARRAY';
+        unless ref $thing eq 'ARRAY';
 
     my $thing_h = $Tie::ArrayAsHash::cache{$thing} ||= do {
         tie my %h, __PACKAGE__, $thing;
