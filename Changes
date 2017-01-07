@@ -1,5 +1,3 @@
-Revision history for Syntax-Feature-EachOnArray
-
 0.04    2013-04-19 (SHARYANTO)
 
         - Fix failures on 5.8 & 5.10 [RT#84728]
